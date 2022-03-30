@@ -41,7 +41,7 @@ public class UsersController {
     // @ModelAttribute - автоматически передает обхект User с заполненными полями и помещает его в model.addAttribute
     @PostMapping()
     public String createUser(@ModelAttribute("user") User user) {
-        user.setId(userDao.getUsers().size() + 1);
+//        user.setId(userDao.getUsers().size() + 1);
         userDao.saveUser(user);
         return "redirect:/users";
     }

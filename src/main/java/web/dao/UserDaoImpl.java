@@ -1,13 +1,21 @@
 package web.dao;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Repository
 public class UserDaoImpl {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
     private final List<User> users = new ArrayList<>();
 
     {
@@ -25,7 +33,8 @@ public class UserDaoImpl {
         return users.stream().filter(x -> x.getId() == id).findAny().orElse(null);
     }
 
+    @Transactional
     public void saveUser(User user) {
-        users.add(user);
+        sessionFactory.getCurrentSession().save(user);
     }
 }
