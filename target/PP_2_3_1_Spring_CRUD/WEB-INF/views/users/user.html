@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Single User info</title>
+    <style>table th, table td {
+        padding: 5px;
+    }</style>
+</head>
+<body>
+<div>
+    <h2>Single User info</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Link</th>
+        </tr>
+        </thead>
+        <tbody>
+            <td th:text="${user.getId()}"></td>
+            <td th:text="${user.getName()}"></td>
+            <td th:text="${user.getSurname()}"></td>
+            <td th:text="${user.getAge()}"></td>
+            <td th:text="${user.getGender()}"></td>
+            <td><a th:href="@{/users}"> more details </a> </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

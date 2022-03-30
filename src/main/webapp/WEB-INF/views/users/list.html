@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of users</title>
+    <style>table th, table td {
+        padding: 5px;
+    }</style>
+</head>
+<body>
+<div>
+    <h2>List of users</h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Link</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user, iterStat : ${users}"
+            th:style="${iterStat.odd}? 'font-weight: bold;'">
+            <td th:text="${iterStat.index} + 1"></td>
+            <td th:text="${user.getName()}"></td>
+            <td th:text="${user.getSurname()}"></td>
+            <td th:text="${user.getAge()}"></td>
+            <td th:text="${user.getGender()}"></td>
+            <td><a th:href="@{/users/{id}(id=${user.getId()})}"> more details </a> </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
