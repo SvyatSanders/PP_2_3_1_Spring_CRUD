@@ -12,27 +12,34 @@
     <h2>List of users</h2>
     <table border="1">
         <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Age</th>
-            <th>Gender</th>
-            <th>Link</th>
-        </tr>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Link</th>
+            </tr>
         </thead>
         <tbody>
-        <tr th:each="user, iterStat : ${users}"
-            th:style="${iterStat.odd}? 'font-weight: bold;'">
-            <td th:text="${iterStat.index} + 1"></td>
-            <td th:text="${user.getName()}"></td>
-            <td th:text="${user.getSurname()}"></td>
-            <td th:text="${user.getAge()}"></td>
-            <td th:text="${user.getGender()}"></td>
-            <td><a th:href="@{/users/{id}(id=${user.getId()})}"> more details </a> </td>
-        </tr>
+            <tr th:each="user, iterStat : ${users}"
+                th:style="${iterStat.odd}? 'font-weight: bold;'">
+                <td th:text="${iterStat.index} + 1"></td>
+                <td th:text="${user.getName()}"></td>
+                <td th:text="${user.getSurname()}"></td>
+                <td th:text="${user.getAge()}"></td>
+                <td th:text="${user.getGender()}"></td>
+                <td><form th:method="GET", th:action="@{/users/{id}/edit(id=${user.getId()})}"><input type="submit" value="edit"/></form></td>
+                <td><form th:method="DELETE", th:action="@{/users/{id}(id=${user.getId()})}"><input type="submit" value="delete"/></form></td>
+                <td><form th:method="GET", th:action="@{/users/{id}(id=${user.getId()})}"><input type="submit" value="more details"/></form></td>
+            </tr>
         </tbody>
     </table>
+        <br/>
+        <hr/>
+        <form th:method="GET", th:action="@{/users/new}"><input type="submit" value="create user"/></form>
 </div>
 </body>
 </html>

@@ -18,6 +18,8 @@
             <th>Surname</th>
             <th>Age</th>
             <th>Gender</th>
+            <th>Edit</th>
+            <th>Delete</th>
             <th>Link</th>
         </tr>
         </thead>
@@ -27,7 +29,9 @@
             <td th:text="${user.getSurname()}"></td>
             <td th:text="${user.getAge()}"></td>
             <td th:text="${user.getGender()}"></td>
-            <td><a th:href="@{/users}"> more details </a> </td>
+            <td><form th:method="GET", th:action="@{/users/{id}/edit(id=${user.getId()})}"><input type="submit" value="edit"/></form></td>
+            <td><form th:method="DELETE", th:action="@{/users/{id}(id=${user.getId()})}"><input type="submit" value="delete"/></form></td>
+            <td><form th:method="GET", th:action="@{/users}"><input type="submit" value="return to all users list"/></form></td>
         </tr>
         </tbody>
     </table>

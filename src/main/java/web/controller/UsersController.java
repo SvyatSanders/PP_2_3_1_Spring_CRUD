@@ -7,18 +7,19 @@ import org.springframework.web.bind.annotation.*;
 import web.dao.UserDaoImpl;
 import web.model.User;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/users")
 public class UsersController {
-    @Autowired
-    UserDaoImpl userDao;
+    @Autowired UserDaoImpl userDao;
 
     @GetMapping()
     public String list(Model model) {
-        List<User> users = userDao.getUsers();
-        model.addAttribute("users", users);
+        if (userDao.getUsers().isEmpty()) {
+            userDao.saveUser(new User("Tom", "Holland", 23, "male"));
+            userDao.saveUser(new User("Ben", "Howard", 42, "male"));
+        }
+
+        model.addAttribute("users", userDao.getUsers());
         return "users/list";
     }
 
@@ -38,11 +39,29 @@ public class UsersController {
         return "users/new";
     }
 
-    // @ModelAttribute - автоматически передает обхект User с заполненными полями и помещает его в model.addAttribute
+    // @ModelAttribute - автоматически передает объект User с заполненными полями и помещает его в model.addAttribute
     @PostMapping()
     public String createUser(@ModelAttribute("user") User user) {
-//        user.setId(userDao.getUsers().size() + 1);
         userDao.saveUser(user);
         return "redirect:/users";
     }
+
+    @GetMapping("/{id}/edit")
+    public String editUser(@PathVariable("id") int id, Model model) {
+        model.addAttribute("user", userDao.getUserById(id));
+        return "users/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("user") User user) {
+        userDao.updateUser(user);
+        return "redirect:/users";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") int id) {
+        userDao.deleteUser(id);
+        return "redirect:/users";
+    }
+
 }
